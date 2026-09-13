@@ -11,6 +11,9 @@ INTEGRANTES DO GRUPO:
 LINK DO REPOSITÓRIO GITHUB:
 https://github.com/rodrigueszkkk/Sprint03-IOT
 
+LINK DA SIMULAÇÃO NO WOKWI (PRONTA PARA RODAR COM 1 CLIQUE):
+https://wokwi.com/projects/475081147505112065
+
 LINK DO VÍDEO PITCH NO YOUTUBE (MODO NÃO LISTADO - ~5 MINUTOS):
 https://www.youtube.com/watch?v=SEU_ID_DO_VIDEO
 

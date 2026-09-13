@@ -22,11 +22,18 @@ Este diretório contém os arquivos para a simulação do nó IoT da **Coleira I
 
 ## 🚀 Como Executar a Simulação
 
-### Opção 1: No Navegador via Wokwi Online
+### Opção 1: Link Direto no Wokwi (Recomendado - 1 Clique)
+Acesse diretamente o projeto montado e salvo:
+👉 **[https://wokwi.com/projects/475081147505112065](https://wokwi.com/projects/475081147505112065)**
+Basta clicar no botão verde **Play** (ou pressionar `Ctrl + Enter`).
+
+---
+
+### Opção 2: Montagem Manual no Navegador
 1. Acesse [https://wokwi.com/projects/new/arduino-uno](https://wokwi.com/projects/new/arduino-uno).
 2. Na aba **sketch.ino**, cole o conteúdo de [`smart_collar.ino`](smart_collar.ino).
 3. Na aba **diagram.json**, cole o conteúdo de [`diagram.json`](diagram.json).
-4. Na aba **Library Manager** (ícone de pasta à esquerda ou em `libraries.txt`), certifique-se de adicionar a biblioteca:
+4. Na aba **libraries.txt**, adicione a linha:
    ```text
    DHT sensor library
    ```
@@ -34,7 +41,7 @@ Este diretório contém os arquivos para a simulação do nó IoT da **Coleira I
 
 ---
 
-### Opção 2: No VS Code com a Extensão Wokwi
+### Opção 3: No VS Code com a Extensão Wokwi
 1. Instale a extensão **Wokwi Simulator** no VS Code.
 2. Abra a pasta `IOT/simulation`.
 3. Pressione `F1` e digite `Wokwi: Start Simulator`.
