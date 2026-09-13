@@ -1,4 +1,4 @@
-﻿# Python
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -10,6 +10,10 @@ env/
 # Course slides and deliverable zips
 *.pdf
 *.zip
+
+# Delivery metadata and pitch script
+ENTREGA_SPRINT3_IOT.*
+roteiro_pitch.md
 
 # IDE and OS files
 .vscode/
