@@ -35,7 +35,7 @@ void setup() {
   pinMode(PIN_LED_RED, OUTPUT);
   pinMode(PIN_BUZZER, OUTPUT);
 
-  digitalWrite(PIN_LED_GREEN, HIGH);
+  digitalWrite(PIN_LED_GREEN, LOW);
   digitalWrite(PIN_LED_YELLOW, LOW);
   digitalWrite(PIN_LED_RED, LOW);
   digitalWrite(PIN_BUZZER, LOW);
@@ -49,7 +49,7 @@ void setup() {
 void loop() {
   unsigned long currentMillis = millis();
 
-  if (previousMillis == 0 || currentMillis - previousMillis >= telemetryInterval) {
+  if (currentMillis - previousMillis >= telemetryInterval) {
     previousMillis = currentMillis;
 
     float temperature = dht.readTemperature();

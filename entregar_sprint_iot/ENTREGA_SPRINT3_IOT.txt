@@ -1,0 +1,24 @@
+================================================================================
+FIAP - DISRUPTIVE ARCHITECTURES: IOT, IOB & GENERATIVE AI
+ENTREGA DA 3ª SPRINT - CLYVO VET
+================================================================================
+
+INTEGRANTES DO GRUPO:
+- Kaiky Pereira      | RM 564578
+- Leandro Guarido    | RM 561760
+- Gabriel Solano     | RM 562325
+
+LINK DO REPOSITÓRIO GITHUB:
+https://github.com/rodrigueszkkk/Sprint03-IOT
+
+LINK DO VÍDEO PITCH NO YOUTUBE (MODO NÃO LISTADO - ~5 MINUTOS):
+https://www.youtube.com/watch?v=SEU_ID_DO_VIDEO
+
+================================================================================
+CONTEÚDO DO PACOTE DE ENTREGA:
+1. README.md: Documentação técnica completa, problema de negócio, arquitetura de IoT & IA, fluxos de dados e métricas.
+2. simulation/: Código-fonte C++ para Arduino/ESP32 (smart_collar.ino) e diagrama Wokwi (diagram.json).
+3. ai_engine/: Motor de IA com modelo preditivo de risco (risk_classifier.py) e copiloto generativo SOAP (generative_advisor.py).
+4. assets/: Diagrama arquitetural oficial em alta resolução (iot_ai_architecture.png).
+5. roteiro_pitch.md: Roteiro detalhado para a gravação do vídeo pitch de 5 minutos.
+================================================================================

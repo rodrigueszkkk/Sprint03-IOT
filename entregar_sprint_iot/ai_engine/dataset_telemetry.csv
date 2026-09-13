@@ -1,0 +1,21 @@
+pet_id,species,age,needs_post_op,temp_celsius,heart_rate_bpm,movement_level,emergency_btn,risk_level,clinical_diagnosis
+1,Canino,4,1,38.4,95,0,0,0,Evolucao estavel pos-cirurgica sem queixas
+2,Felino,2,0,38.6,110,1,0,0,Rotina preventiva sem alteracoes
+3,Canino,6,1,39.3,135,1,0,1,Febre moderada e inquietacao pos-operatoria
+4,Canino,4,1,39.9,155,2,0,2,Hipertermia severa e taquicardia com agitacao
+5,Canino,8,0,38.2,85,0,0,0,Paciente geriatrico em repouso normal
+6,Felino,3,1,37.1,70,0,0,2,Hipotermia pos-anestesica e bradicardia
+7,Canino,2,0,38.8,120,2,0,0,Atividade fisica normal durante o dia
+8,Canino,5,1,39.6,140,0,0,1,Sinais de dor aguda e febre moderada
+9,Felino,4,0,38.5,100,0,0,0,Animal estavel em ambiente calmo
+10,Canino,1,1,40.1,165,1,1,2,Emergencia deiscencia cirurgica e dor extrema
+11,Canino,3,0,38.7,98,0,0,0,Checkup de rotina sem achados clinicos
+12,Felino,5,1,39.4,130,1,0,1,Recuperacao cirurgica lenta com febrícula
+13,Canino,7,1,39.8,148,2,0,2,Suspeita de infeccao de sutura com hipertermia
+14,Canino,4,0,38.3,92,0,0,0,Animal assintomatico em repouso
+15,Felino,1,0,38.9,115,1,0,0,Jovem ativo com parametros fisiologicos normais
+16,Canino,9,1,37.3,65,0,0,2,Hipotermia grave e letargia pos-cirurgica
+17,Canino,2,1,39.5,138,1,0,1,Inflamacao local e taquicardia leve
+18,Felino,6,0,38.6,105,0,0,0,Padrao basal saudavel
+19,Canino,3,1,40.0,160,2,1,2,Choque septico iminente e SOS tutor acionado
+20,Canino,5,0,38.5,90,0,0,0,Consulta de reavaliacao sem intercorrencias
