@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLYVO VET - Simulador IoT Smart Collar (Sprint 3)</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #0284c7;
+      --green: #22c55e;
+      --yellow: #eab308;
+      --red: #ef4444;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 24px; min-height: 100vh; }
+    .header { max-width: 1100px; margin: 0 auto 24px auto; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    .header h1 { font-size: 22px; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
+    .header .badge { background: #0369a1; padding: 4px 10px; border-radius: 9999px; font-size: 12px; font-weight: 600; }
+    .grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media(max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    .card-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; color: #cbd5e1; }
+    .control-group { margin-bottom: 18px; }
+    .control-group label { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; color: var(--text); }
+    .control-group .val { font-weight: 700; color: #38bdf8; }
+    input[type=range] { width: 100%; accent-color: #38bdf8; height: 6px; border-radius: 4px; background: #334155; cursor: pointer; }
+    .btn-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; border: 1px solid var(--border); background: #0f172a; color: var(--text); cursor: pointer; font-weight: 600; transition: all 0.2s; font-size: 13px; }
+    .btn-toggle.active { background: #dc2626; border-color: #ef4444; color: #fff; }
+    .btn-toggle.active-blue { background: #2563eb; border-color: #3b82f6; color: #fff; }
+    .quick-presets { display: flex; gap: 10px; margin-top: 15px; }
+    .btn-preset { flex: 1; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; transition: 0.2s; }
+    .btn-normal { background: #15803d; color: white; }
+    .btn-warning { background: #a16207; color: white; }
+    .btn-critical { background: #b91c1c; color: white; }
+    .btn-preset:hover { filter: brightness(1.2); }
+
+    /* Physical Board Actuators */
+    .actuators-panel { display: flex; justify-content: space-around; align-items: center; background: #090d16; padding: 20px; border-radius: 10px; border: 1px solid var(--border); margin-top: 10px; }
+    .led-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; }
+    .led { width: 34px; height: 34px; border-radius: 50%; background: #334155; border: 2px solid #475569; transition: all 0.2s; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
+    .led.green-on { background: #22c55e; border-color: #86efac; box-shadow: 0 0 18px #22c55e, inset 0 2px 4px #fff; }
+    .led.yellow-on { background: #eab308; border-color: #fde047; box-shadow: 0 0 18px #eab308, inset 0 2px 4px #fff; }
+    .led.red-on { background: #ef4444; border-color: #fca5a5; box-shadow: 0 0 22px #ef4444, inset 0 2px 4px #fff; }
+    .buzzer-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; }
+    .buzzer { width: 40px; height: 40px; border-radius: 50%; background: #1e293b; border: 2px solid #64748b; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #64748b; }
+    .buzzer.beeping { color: #ef4444; border-color: #ef4444; animation: shake 0.2s infinite; }
+    @keyframes shake { 0%{transform: scale(1);} 50%{transform: scale(1.15);} 100%{transform: scale(1);} }
+
+    /* Terminal Console */
+    .terminal { background: #000; border: 1px solid #1e293b; border-radius: 8px; padding: 14px; font-family: 'Consolas', monospace; font-size: 12px; height: 260px; overflow-y: auto; color: #22c55e; line-height: 1.5; }
+    .log-line { margin-bottom: 4px; word-break: break-all; }
+    .log-alert { color: #f87171; font-weight: bold; }
+    .log-warn { color: #facc15; }
+    .meta-box { background: #0f172a; padding: 12px; border-radius: 8px; font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-top: 15px; border-left: 3px solid #38bdf8; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div>
+      <h1>🐾 CLYVO VET - Smart Collar IoT Simulator</h1>
+      <p style="font-size: 13px; color: #94a3b8; margin-top: 4px;">Disruptive Architectures: IoT, IoB & Generative AI - FIAP Sprint 3</p>
+    </div>
+    <div class="badge">NÓ IOT EMBARCADO ATIVO (9600 BAUD)</div>
+  </div>
+
+  <div class="grid">
+    <!-- Controles de Hardware -->
+    <div class="card">
+      <div class="card-title">🎛️ Painel de Sensores da Coleira (Hardware Edge)</div>
+
+      <!-- Temperatura -->
+      <div class="control-group">
+        <label>
+          <span>🌡️ Temperatura Corporal (Sensor A1):</span>
+          <span class="val" id="tempDisplay">38.5 °C</span>
+        </label>
+        <input type="range" id="tempInput" min="35.0" max="42.0" step="0.1" value="38.5">
+        <small style="color: #64748b; font-size: 11px;">Faixa fisiológica canina: 37.5°C a 39.2°C (Acima de 39.5°C = Febre / Sepse)</small>
+      </div>
+
+      <!-- Frequência Cardíaca -->
+      <div class="control-group">
+        <label>
+          <span>❤️ Frequência Cardíaca (Sensor A0):</span>
+          <span class="val" id="bpmDisplay">90 BPM</span>
+        </label>
+        <input type="range" id="bpmInput" min="50" max="180" step="1" value="90">
+        <small style="color: #64748b; font-size: 11px;">Normal repouso: 70 a 130 BPM (Acima de 150 BPM = Taquicardia Severa)</small>
+      </div>
+
+      <!-- Botões de Movimento e SOS -->
+      <div class="control-group" style="display: flex; gap: 10px; margin-top: 10px;">
+        <button class="btn-toggle" id="btnMove">🏃 Animal em Movimento: NÃO</button>
+        <button class="btn-toggle" id="btnSos">🚨 Botão SOS Tutor: SOLTO</button>
+      </div>
+
+      <!-- Cenários Rápidos -->
+      <div style="margin-top: 15px;">
+        <span style="font-size: 12px; font-weight: 600; color: #94a3b8;">Cenários de Demonstração Rápida (1 Clique):</span>
+        <div class="quick-presets">
+          <button class="btn-preset btn-normal" onclick="setScenario(38.2, 85, false, false)">🟢 Paciente Estável</button>
+          <button class="btn-preset btn-warning" onclick="setScenario(39.3, 135, true, false)">🟡 Alerta Moderado</button>
+          <button class="btn-preset btn-critical" onclick="setScenario(40.0, 155, true, false)">🔴 Emergência Crítica</button>
+        </div>
+      </div>
+
+      <div class="meta-box">
+        <strong>Paciente Vinculado:</strong> Thor (Golden Retriever, 4 anos) | ID: 1<br>
+        <strong>Prontuário no Banco:</strong> Cirurgia Ortopédica de Osteossíntese Femoral (Repouso Absoluto)
+      </div>
+    </div>
+
+    <!-- Atuadores Físicos e Monitor Serial -->
+    <div class="card">
+      <div class="card-title">💡 Atuadores Físicos da Coleira (LEDs & Alarme)</div>
+
+      <div class="actuators-panel">
+        <div class="led-wrapper">
+          <div class="led green-on" id="ledGreen"></div>
+          <span style="color: #86efac;">ESTÁVEL</span>
+        </div>
+        <div class="led-wrapper">
+          <div class="led" id="ledYellow"></div>
+          <span style="color: #fde047;">ATENÇÃO</span>
+        </div>
+        <div class="led-wrapper">
+          <div class="led" id="ledRed"></div>
+          <span style="color: #fca5a5;">CRÍTICO</span>
+        </div>
+        <div class="buzzer-wrapper">
+          <div class="buzzer" id="buzzerIcon">🔊</div>
+          <span style="color: #94a3b8;" id="buzzerLabel">ALARME OFF</span>
+        </div>
+      </div>
+
+      <div class="card-title" style="margin-top: 20px;">📟 Monitor Serial do Arduino (Telemetria JSON em Tempo Real)</div>
+      <div class="terminal" id="terminal"></div>
+    </div>
+  </div>
+
+  <script>
+    let isMoving = false;
+    let isSos = false;
+    let audioCtx = null;
+
+    const tempInput = document.getElementById('tempInput');
+    const bpmInput = document.getElementById('bpmInput');
+    const tempDisplay = document.getElementById('tempDisplay');
+    const bpmDisplay = document.getElementById('bpmDisplay');
+    const btnMove = document.getElementById('btnMove');
+    const btnSos = document.getElementById('btnSos');
+    const ledGreen = document.getElementById('ledGreen');
+    const ledYellow = document.getElementById('ledYellow');
+    const ledRed = document.getElementById('ledRed');
+    const buzzerIcon = document.getElementById('buzzerIcon');
+    const buzzerLabel = document.getElementById('buzzerLabel');
+    const terminal = document.getElementById('terminal');
+
+    function playBeep() {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(950, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.2);
+      } catch (e) {}
+    }
+
+    tempInput.addEventListener('input', () => { tempDisplay.textContent = parseFloat(tempInput.value).toFixed(1) + ' °C'; updateSimulation(); });
+    bpmInput.addEventListener('input', () => { bpmDisplay.textContent = bpmInput.value + ' BPM'; updateSimulation(); });
+
+    btnMove.addEventListener('click', () => {
+      isMoving = !isMoving;
+      btnMove.classList.toggle('active-blue', isMoving);
+      btnMove.textContent = isMoving ? '🏃 Animal em Movimento: SIM' : '🏃 Animal em Movimento: NÃO';
+      updateSimulation();
+    });
+
+    btnSos.addEventListener('click', () => {
+      isSos = !isSos;
+      btnSos.classList.toggle('active', isSos);
+      btnSos.textContent = isSos ? '🚨 Botão SOS Tutor: PRESSIONADO' : '🚨 Botão SOS Tutor: SOLTO';
+      updateSimulation();
+    });
+
+    function setScenario(temp, bpm, move, sos) {
+      tempInput.value = temp;
+      bpmInput.value = bpm;
+      tempDisplay.textContent = temp.toFixed(1) + ' °C';
+      bpmDisplay.textContent = bpm + ' BPM';
+      isMoving = move;
+      isSos = sos;
+      btnMove.classList.toggle('active-blue', isMoving);
+      btnMove.textContent = isMoving ? '🏃 Animal em Movimento: SIM' : '🏃 Animal em Movimento: NÃO';
+      btnSos.classList.toggle('active', isSos);
+      btnSos.textContent = isSos ? '🚨 Botão SOS Tutor: PRESSIONADO' : '🚨 Botão SOS Tutor: SOLTO';
+      updateSimulation();
+    }
+
+    function updateSimulation() {
+      const temp = parseFloat(tempInput.value);
+      const bpm = parseInt(bpmInput.value);
+
+      let riskScore = 0;
+      if (temp > 39.5 || temp < 37.2) riskScore += 2;
+      else if (temp > 39.2) riskScore += 1;
+
+      if (bpm > 150 || bpm < 60) riskScore += 2;
+      else if (bpm > 130) riskScore += 1;
+
+      if (isMoving) riskScore += 2; // Pós-operatório requer repouso
+      if (isSos) riskScore += 4;
+
+      let status = "ESTAVEL";
+      ledGreen.className = 'led';
+      ledYellow.className = 'led';
+      ledRed.className = 'led';
+      buzzerIcon.className = 'buzzer';
+      buzzerLabel.textContent = "ALARME OFF";
+      buzzerLabel.style.color = "#94a3b8";
+
+      if (riskScore >= 3) {
+        status = "CRITICO";
+        ledRed.classList.add('red-on');
+        buzzerIcon.classList.add('beeping');
+        buzzerLabel.textContent = "ALARME ATIVO (P1)";
+        buzzerLabel.style.color = "#ef4444";
+        playBeep();
+      } else if (riskScore >= 1) {
+        status = "ATENCAO";
+        ledYellow.classList.add('yellow-on');
+      } else {
+        status = "ESTAVEL";
+        ledGreen.classList.add('green-on');
+      }
+
+      const jsonPayload = {
+        petId: 1,
+        petName: "Thor",
+        temperatura: parseFloat(temp.toFixed(1)),
+        bpm: bpm,
+        movimento: isMoving,
+        sos: isSos,
+        status: status,
+        riskScore: riskScore,
+        timestamp: new Date().toLocaleTimeString()
+      };
+
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      if (status === 'CRITICO') line.className += ' log-alert';
+      else if (status === 'ATENCAO') line.className += ' log-warn';
+
+      line.textContent = `[SERIAL OUT]: ${JSON.stringify(jsonPayload)}`;
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    // Inicialização
+    terminal.innerHTML = `
+      <div style="color: #38bdf8;">[BOOT] Arduino UNO R3 Inicializado...</div>
+      <div style="color: #94a3b8;">[BOOT] Calibrando sensores analógicos A0 e A1...</div>
+      <div style="color: #22c55e;">[BOOT] Comunicação Serial Estabelecida (9600 baud)</div>
+      <div style="color: #64748b;">--------------------------------------------------</div>
+    `;
+    updateSimulation();
+    setInterval(updateSimulation, 3000);
+  </script>
+</body>
+</html>

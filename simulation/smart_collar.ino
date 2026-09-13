@@ -27,6 +27,15 @@ const bool NEEDS_POST_OP_CARE = true;
 unsigned long previousMillis = 0;
 const long telemetryInterval = 3000;
 
+// ================================================================================
+// CONTROLE MANUAL RÁPIDO (OPCIONAL PARA TESTES):
+// Se quiser forçar um valor fixo, basta alterar aqui:
+// Exemplo: float TEMPERATURA_MANUAL = 40.0; (coloque 0.0 para usar o sensor analógico)
+// Exemplo: int   BPM_MANUAL         = 155;  (coloque 0 para usar o sensor analógico)
+float TEMPERATURA_MANUAL = 0.0; 
+int   BPM_MANUAL         = 0;
+// ================================================================================
+
 void setup() {
   Serial.begin(9600);
 
@@ -61,13 +70,23 @@ void loop() {
   if (previousMillis == 0 || currentMillis - previousMillis >= telemetryInterval) {
     previousMillis = currentMillis;
 
-    // 1. Leitura da Temperatura Corporal (Mapeamento de 35.0 a 42.0 °C)
-    int rawTemp = analogRead(PIN_TEMP_SENSOR);
-    float temperature = 35.0 + ((float)rawTemp / 1023.0) * 7.0;
+    // 1. Leitura da Temperatura Corporal (ou valor manual se definido)
+    float temperature;
+    if (TEMPERATURA_MANUAL > 0.0) {
+      temperature = TEMPERATURA_MANUAL;
+    } else {
+      int rawTemp = analogRead(PIN_TEMP_SENSOR);
+      temperature = 35.0 + ((float)rawTemp / 1023.0) * 7.0;
+    }
 
-    // 2. Leitura da Frequência Cardíaca (Mapeamento de 50 a 180 BPM)
-    int rawPulse = analogRead(PIN_PULSE_SENSOR);
-    int heartRate = map(rawPulse, 0, 1023, 50, 180);
+    // 2. Leitura da Frequência Cardíaca (ou valor manual se definido)
+    int heartRate;
+    if (BPM_MANUAL > 0) {
+      heartRate = BPM_MANUAL;
+    } else {
+      int rawPulse = analogRead(PIN_PULSE_SENSOR);
+      heartRate = map(rawPulse, 0, 1023, 50, 180);
+    }
 
     // 3. Leitura dos Sensores Digitais (INPUT_PULLUP: LOW = Pressionado/Ativo)
     bool isMoving = (digitalRead(PIN_ACTIVITY_SENSOR) == LOW);
