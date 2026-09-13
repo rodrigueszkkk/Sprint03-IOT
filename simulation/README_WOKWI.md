@@ -9,8 +9,8 @@ Este diretório contém os arquivos para a simulação do nó IoT da **Coleira I
 | Componente | Pino no Arduino | Função no Sistema |
 | :--- | :--- | :--- |
 | **Arduino UNO** | - | Microcontrolador de borda (Edge Computing) |
-| **Sensor DHT22** | Pino Digital 2 | Monitoramento de Temperatura Corporal do Pet |
-| **Potenciômetro** | Pino Analógico A0 | Simulação do Sensor de Pulso Cardíaco (BPM 50-180) |
+| **Potenciômetro Temp** | Pino Analógico A1 | Sensor Analógico de Temperatura Corporal (35.0 a 42.0 °C) |
+| **Potenciômetro Pulso** | Pino Analógico A0 | Simulação do Sensor de Pulso Cardíaco (50 a 180 BPM) |
 | **Botão Azul (Activity)** | Pino Digital 3 | Sensor de Movimentação / Acelerômetro (Repouso vs Atividade) |
 | **Botão Vermelho (SOS)** | Pino Digital 7 | Botão de Pânico / Acionamento de Emergência do Tutor |
 | **LED Verde** | Pino Digital 10 | Status: Animal Estável / Sinais Vitais Normais |
@@ -22,9 +22,9 @@ Este diretório contém os arquivos para a simulação do nó IoT da **Coleira I
 
 ## 🚀 Como Executar a Simulação
 
-### Opção 1: Link Direto no Wokwi (Recomendado - 1 Clique)
-Acesse diretamente o projeto montado e salvo:
-👉 **[https://wokwi.com/projects/475081147505112065](https://wokwi.com/projects/475081147505112065)**
+### Opção 1: Link Direto no Wokwi (100% Nativo - 1 Clique)
+Acesse diretamente o projeto montado e salvo (sem necessidade de bibliotecas externas):
+👉 **[https://wokwi.com/projects/475082149974273025](https://wokwi.com/projects/475082149974273025)**
 Basta clicar no botão verde **Play** (ou pressionar `Ctrl + Enter`).
 
 ---
@@ -33,11 +33,7 @@ Basta clicar no botão verde **Play** (ou pressionar `Ctrl + Enter`).
 1. Acesse [https://wokwi.com/projects/new/arduino-uno](https://wokwi.com/projects/new/arduino-uno).
 2. Na aba **sketch.ino**, cole o conteúdo de [`smart_collar.ino`](smart_collar.ino).
 3. Na aba **diagram.json**, cole o conteúdo de [`diagram.json`](diagram.json).
-4. Na aba **libraries.txt**, adicione a linha:
-   ```text
-   DHT sensor library
-   ```
-5. Clique no botão verde **Play / Start Simulation**.
+4. Clique no botão verde **Play / Start Simulation** (não precisa de nenhuma biblioteca externa!).
 
 ---
 

@@ -20,7 +20,7 @@ Repositório acadêmico desenvolvido para a **3ª Sprint da disciplina Disruptiv
 | **Gabriel Solano** | RM 562325 |
 
 - **Repositório GitHub:** [https://github.com/rodrigueszkkk/Sprint03-IOT](https://github.com/rodrigueszkkk/Sprint03-IOT)
-- **Simulação Wokwi Online (1 Clique):** [https://wokwi.com/projects/475081147505112065](https://wokwi.com/projects/475081147505112065)
+- **Simulação Wokwi Online (1 Clique):** [https://wokwi.com/projects/475082149974273025](https://wokwi.com/projects/475082149974273025)
 - **Vídeo Pitch no YouTube (~5 minutos):** [Link do Vídeo no YouTube](https://www.youtube.com/watch?v=SEU_ID_DO_VIDEO)
 
 ---
@@ -144,14 +144,13 @@ O circuito completo está modelado na pasta [`simulation/`](simulation/):
 - **Conexões do Simulador:** [`simulation/diagram.json`](simulation/diagram.json)
 
 ### Como Rodar no Wokwi:
-- **Link Direto do Projeto no Wokwi (Pronto com 1 clique):** [https://wokwi.com/projects/475081147505112065](https://wokwi.com/projects/475081147505112065)  
-  *Basta acessar o link e clicar no botão verde **Play** (ou pressionar `Ctrl + Enter`). O circuito, código e bibliotecas já estão todos configurados e salvos!*
+- **Link Direto do Projeto no Wokwi (100% Nativo - 1 Clique):** [https://wokwi.com/projects/475082149974273025](https://wokwi.com/projects/475082149974273025)  
+  *Basta acessar o link e clicar no botão verde **Play** (ou pressionar `Ctrl + Enter`). O código é 100% nativo C++ sem nenhuma biblioteca externa, garantindo compilação instantânea e funcionamento em qualquer navegador.*
 
 #### Execução Manual (opcional):
 1. Abra [https://wokwi.com/projects/new/arduino-uno](https://wokwi.com/projects/new/arduino-uno).
 2. Cole o conteúdo de `smart_collar.ino` na aba **sketch.ino** e `diagram.json` na aba **diagram.json**.
-3. Na aba **libraries.txt**, adicione `DHT sensor library`.
-4. Clique em **Play**: o Monitor Serial emitirá os pacotes JSON e os LEDs reagirão em tempo real aos ajustes de temperatura e pulso.
+3. Clique em **Play**: o Monitor Serial emitirá os pacotes JSON e os LEDs reagirão em tempo real aos ajustes dos potenciômetros de temperatura e pulso.
 
 ---
 
