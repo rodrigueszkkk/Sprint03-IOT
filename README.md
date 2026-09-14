@@ -21,7 +21,7 @@ Repositório acadêmico desenvolvido para a **3ª Sprint da disciplina Disruptiv
 
 - **Repositório GitHub:** [https://github.com/rodrigueszkkk/Sprint03-IOT](https://github.com/rodrigueszkkk/Sprint03-IOT)
 - **Simulação Wokwi Online (1 Clique):** [https://wokwi.com/projects/475082149974273025](https://wokwi.com/projects/475082149974273025)
-- **Vídeo Pitch no YouTube (~5 minutos):** [Link do Vídeo no YouTube](https://www.youtube.com/watch?v=SEU_ID_DO_VIDEO)
+- **Vídeo Pitch no YouTube (~5 minutos):** [Link do Vídeo no YouTube](https://youtu.be/1sKfo1gWa7M)
 
 ---
 
